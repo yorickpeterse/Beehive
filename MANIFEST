@@ -1,0 +1,12 @@
+MANIFEST
+README.md
+Rakefile
+example/client.rb
+example/multiple-workers.rb
+example/worker.rb
+lib/beehive/client.rb
+lib/beehive/version.rb
+lib/beehive/worker.rb
+lib/beehive.rb
+license.txt
+task/build.rake

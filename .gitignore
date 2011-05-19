@@ -1,0 +1,12 @@
+# Ignore common crap
+.DS_Store
+
+# Ignore the YARD files
+doc/*
+!doc/.gitkeep
+
+pkg/*
+!pkg/.gitkeep
+
+spec/tmp/*
+!spec/tmp/.gitkeep
