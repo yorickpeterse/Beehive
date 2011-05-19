@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.description = 'Beehive is a lightweight queue system that uses Redis.'
   s.files       = manifest
   s.has_rdoc    = 'yard'
-  #s.executables = ['']
   
   # The following gems are always required  
   s.add_dependency('redis', ['>= 2.2.0'])
+  s.add_dependency('json' , ['>= 1.5.1'])
 
   # The following gems are only required when developing beehive itself
   s.add_development_dependency('rake' , ['>= 0.8.7'])

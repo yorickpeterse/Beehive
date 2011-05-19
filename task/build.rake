@@ -26,8 +26,8 @@ namespace :build do
   task :manifest do
     gem_path     = File.expand_path('../../', __FILE__)
     ignore_exts  = ['.gem', '.gemspec', '.swp']
-    ignore_files = ['.DS_Store', '.gitignore', '.gitkeep']
-    ignore_dirs  = ['.git', '.yardoc', 'spec', 'pkg', 'doc']
+    ignore_files = ['.DS_Store', '.gitignore', 'output']
+    ignore_dirs  = ['.git', '.yardoc', 'pkg', 'doc']
     files        = ''
     
     Find.find(gem_path) do |f|
