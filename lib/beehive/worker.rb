@@ -109,7 +109,7 @@ module Beehive
               @options[:logger].info('Process forked, executing job')
 
               begin
-                ::Beehive::Jobs[job].call(params)
+                ::Beehive::Jobs[job].call(params, @options[:logger])
 
                 @options[:logger].info('Job successfully processed')
                 exit
