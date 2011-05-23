@@ -50,7 +50,7 @@ module Beehive
     #
     def get(job)
       job = "beehive.jobs.#{job}"
-      job = @connection.rpop(job)
+      job = @connection.lpop(job)
       
       if !job.nil?
         return JSON.load(job)
