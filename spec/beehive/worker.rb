@@ -2,7 +2,11 @@ require File.expand_path('../../helper', __FILE__)
 
 describe('Beehive::Worker') do
   it('Create a new instance of Beehive::Worker') do
-    worker = Beehive::Worker.new
+    if ENV.key?('REDIS')
+      worker = Beehive::Worker.new([ENV['REDIS']])
+    else
+      worker = Beehive::Worker.new
+    end
 
     worker.options[:logger].level.should === Logger::WARN
     worker.options[:jobs].size.should    === 0
@@ -23,7 +27,12 @@ describe('Beehive::Worker') do
     end
 
     # Queue the job
-    client = Beehive::Client.new
+    if ENV.key?('REDIS')
+      client = Beehive::Client.new([ENV['REDIS']])
+    else
+      client = Beehive::Client.new
+    end
+
     client.queue('spec')
 
     pid = Process.fork do
