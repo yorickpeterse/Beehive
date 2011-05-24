@@ -1,5 +1,4 @@
 require File.expand_path('../../helper', __FILE__)
-require 'rake'
 
 describe('Check if the environment is capable of running the tests') do
 
