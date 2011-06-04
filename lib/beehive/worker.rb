@@ -21,7 +21,8 @@ module Beehive
       :daemonize => false,
       :jobs      => [],
       :wait      => 5,
-      :log_level => Logger::WARN
+      :log_level => Logger::WARN,
+      :pid       => File.join(Dir.pwd, 'worker.pid')
     }
 
     # Instance of Beehive::Client, used for communicating with the Redis server
@@ -50,6 +51,7 @@ module Beehive
     # reduces CPU and network usage.
     # @option worker_options :log_level The log even to use for the :logger option, set to
     # Logger::WARN by default.
+    # @option worker_options :pid Path to the location of the PID file for the worker.
     #
     def initialize(redis_options = {}, worker_options = {})
       @connection             = ::Beehive::Client.new(redis_options)
@@ -83,12 +85,16 @@ module Beehive
         Process.daemon(true)
       end
 
-      @options[:logger].info("Starting main worker, PID: #{Process.pid}")
+      @worker_pid = Process.pid
+
+      @options[:logger].info("Starting main worker, PID: #{@worker_pid}")
+      write_pid
 
       loop do
         if @shutdown === true
           @options[:logger].info('The party has ended, time to shut down')
           @connection.disconnect
+          File.unlink(@options[:pid])
           exit
         end
 
@@ -125,6 +131,12 @@ module Beehive
           end
         end
 
+        # Did the PID change for some reason?
+        if Process.pid != @worker_pid
+          @worker_pid = Process.pid
+          write_pid
+        end
+
         # Reduces CPU load and network traffic
         sleep(@options[:wait])
       end
@@ -153,6 +165,18 @@ module Beehive
           @options[:logger].info("Shutting down the worker with PID #{@child_pid}")
           Process.kill('INT', @child_pid)
         end
+      end
+    end
+
+    ##
+    # Writes the given PID to the PID file.
+    #
+    # @author Yorick Peterse
+    # @since  0.1.2
+    #
+    def write_pid
+      File.open(@options[:pid], 'w') do |handle|
+        handle.write(@worker_pid)
       end
     end
   end # Worker

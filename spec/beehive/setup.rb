@@ -2,12 +2,6 @@ require File.expand_path('../../helper', __FILE__)
 
 describe('Check if the environment is capable of running the tests') do
 
-  it('Ruby version is 1.9 or newer') do
-    if RUBY_VERSION.to_f < 1.9
-      fail("You need at least Ruby 1.9 to run these tests")
-    end
-  end
-
   it('Check if Redis is running') do
     # Dirty way of checking to see if Redis is running
     output  = `ps a | grep redis-server`

@@ -49,4 +49,23 @@ describe('Beehive::Worker') do
     path.should === 'Hello, world!'
   end
 
+  it('Write the PID') do
+    pid_path = File.expand_path('../../tmp/worker.pid', __FILE__)
+
+    pid = Process.fork do
+      worker = Beehive::Worker.new({}, {:pid => pid_path})
+      worker.work
+    end
+
+    # Give the worker some time to boot up
+    sleep(1)
+
+    # Check if the PID is correct
+    pid_file        = File.read(pid_path, File.size(pid_path)).strip
+    pid_file.should === pid.to_s
+
+    # Close the connection
+    Process.kill('INT', pid_file.to_i)
+  end
+
 end
