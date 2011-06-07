@@ -8,7 +8,7 @@ manifest = manifest.split "\n"
 Gem::Specification.new do |s|
   s.name        = 'beehive'
   s.version     = Beehive::Version
-  s.date        = '20-05-2011'
+  s.date        = '07-07-2011'
   s.authors     = ['Yorick Peterse']
   s.email       = 'info@yorickpeterse.com'
   s.summary     = 'Beehive is a lightweight queue system that uses Redis.'

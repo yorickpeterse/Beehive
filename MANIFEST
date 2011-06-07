@@ -14,8 +14,11 @@ lib/beehive.rb
 license.txt
 spec/.gitkeep
 spec/.rspec
+spec/beehive/all.rb
 spec/beehive/client.rb
+spec/beehive/setup.rb
 spec/beehive/worker.rb
 spec/helper.rb
 spec/tmp/.gitkeep
 task/build.rake
+task/test.rake
